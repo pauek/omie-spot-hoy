@@ -16,32 +16,28 @@ export const useOMIEData = routeLoader$(async () => {
     .slice(1, 25)
     .map((line) => Number(line.split(";").at(4)));
   const max = series.reduce((a, b) => Math.max(a, b));
-  const min = series.reduce((a, b) => Math.min(a, b));
-  return { date: `${d}/${m}/${y}`, series, max, min };
+  return { date: `${d}/${m}/${y}`, series, max };
 });
 
 export default component$(() => {
   const omie = useOMIEData();
-  const range = omie.value.max - omie.value.min;
-  const scaled = omie.value.series.map(
-    (x) => ((x - omie.value.min) / range) * 100
-  );
+  const scaled = omie.value.series.map((x) => x / omie.value.max);
   return (
     <div class="p-4">
-      <h1 class="font-bold text-2xl pb-3">{omie.value.date}</h1>
-      <div class="flex flex-row gap-[2px] border mt-6">
+      <h1 class="font-bold text-4xl pb-5">{omie.value.date}</h1>
+      <div class="flex flex-col gap-[2px] border ml-10 mb-6 mr-8">
         {scaled.map((value, i) => (
           <div class="flex-1 flex flex-col items-stretch">
             <div class="flex-1" />
-            <div class="h-[400px] flex flex-col justify-end items-stretch">
+            <div class="flex flex-row justify-start items-stretch">
               <div
-                class="flex flex-col items-center bg-red-500 relative"
-                style={{ height: `${Math.floor(value * 4)}px` }}
+                class="h-8 flex flex-row items-center bg-sky-700 relative"
+                style={{ width: `${Math.floor(value * 100)}%` }}
               >
-                <div class="absolute top-[-1.5em] left-0 right-0 text-center text-stone-500">
+                <div class="absolute right-[-1.5em] top-0 bottom-0 flex flex-col justify-center text-center text-stone-500">
                   {Math.floor(omie.value.series[i])}
                 </div>
-                <div class="pb-1 text-center text-sm absolute bottom-[-2em]">
+                <div class="flex flex-col justify-center text-right absolute left-[-2.8em] w-[2.2em]">
                   {i}h
                 </div>
               </div>
