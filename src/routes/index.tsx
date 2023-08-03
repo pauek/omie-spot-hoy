@@ -24,20 +24,20 @@ export default component$(() => {
   const scaled = omie.value.series.map((x) => x / omie.value.max);
   return (
     <div class="p-4">
-      <h1 class="font-bold text-4xl pb-5">{omie.value.date}</h1>
-      <div class="flex flex-col gap-[2px] border ml-10 mb-6 mr-8">
+      <h1 class="font-bold text-3xl pb-2 text-center">{omie.value.date}</h1>
+      <div class="flex flex-col gap-[2px] border ml-5 mb-6 mr-3">
         {scaled.map((value, i) => (
           <div class="flex-1 flex flex-col items-stretch">
             <div class="flex-1" />
             <div class="flex flex-row justify-start items-stretch">
               <div
-                class="h-8 flex flex-row items-center bg-sky-700 relative"
+                class="h-6 flex flex-row items-center bg-sky-700 relative"
                 style={{ width: `${Math.floor(value * 100)}%` }}
               >
-                <div class="absolute right-[-1.5em] top-0 bottom-0 flex flex-col justify-center text-center text-stone-500">
+                <div class="absolute right-[-1.5em] top-0 bottom-0 flex flex-col justify-center text-center text-stone-500 text-xs">
                   {Math.floor(omie.value.series[i])}
                 </div>
-                <div class="flex flex-col justify-center text-right absolute left-[-2.8em] w-[2.2em]">
+                <div class="flex flex-col justify-center text-right absolute left-[-2.3em] w-[2em]">
                   {i}h
                 </div>
               </div>
